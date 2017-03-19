@@ -1,0 +1,36 @@
+{
+  "name": "wikistacktwo",
+  "version": "1.0.0",
+  "description": "wiki-like app",
+  "main": "app.js",
+  "scripts": {
+    "test": "test",
+    "start": "nodemon -e html,js,css app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TinaHeiligers/wikistackTwo.git"
+  },
+  "keywords": [
+    "wiki",
+    "express",
+    "node",
+    "postgress"
+  ],
+  "author": "Tina Heiligers",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TinaHeiligers/wikistackTwo/issues"
+  },
+  "homepage": "https://github.com/TinaHeiligers/wikistackTwo#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "morgan": "^1.8.1",
+    "nunjucks": "^3.0.0",
+    "path": "^0.12.7",
+    "pg": "^6.1.4",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.30.2"
+  }
+}
