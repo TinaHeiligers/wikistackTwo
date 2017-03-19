@@ -6,6 +6,8 @@ var bodyParser = require('body-parser');
 var nunjucks = require('nunjucks');
 var Page = require('./models').Page;
 var User = require('./models').User;
+var wikiRouter = require('./routes/wiki');
+var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -25,6 +27,9 @@ nunjucks.configure('views', {noCache: true});
 app.set('view engine', 'html');
 app.engine('html', nunjucks.render);
 
+app.use('/wiki', wikiRouter);
+app.use('/users', usersRouter);
+
 //render html
 app.get('/', function(req, res) {
   res.render('/views/index');
@@ -41,7 +46,7 @@ Page.sync({force: true})
       User.sync({force: true})
     })
     .then(function() {
-      app.listen(3010, function() {
+      app.listen(3001, function() {
         console.log("Server listening on port 3010");
       })
     })

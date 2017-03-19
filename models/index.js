@@ -1,3 +1,4 @@
+'use strict';
 var Sequelize = require('sequelize');
 var db = new Sequelize('postgres://localhost:5432/wikistack', {
   logging: false
@@ -26,6 +27,14 @@ var Page = db.define('page', {
     route: function() {
       return '/wiki/' + this.urlTitle;
     }
+  }
+});
+
+Page.hook('beforeValidate', function(page) {
+  if (page.title) {
+    page.urlTitle = page.title.replace(/\s/g, '_').replace(/\W/g, '');
+  } else {
+    page.urlTitle = math.random().toString(36).substring(2, 7);
   }
 });
 
