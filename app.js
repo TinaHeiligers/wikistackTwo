@@ -41,9 +41,9 @@ app.use(function(err, req, res, next) {
 });
 
 //sync the db first then tell the app to listen
-Page.sync({force: true})
+Page.sync({force: false})
     .then(function() {
-      User.sync({force: true})
+      User.sync({force: false})
     })
     .then(function() {
       app.listen(3001, function() {

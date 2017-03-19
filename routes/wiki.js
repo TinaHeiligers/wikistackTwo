@@ -6,11 +6,10 @@ var Page = require('../models').Page;
 module.exports = router;
 
 router.get('/', function(req, res, next) {
-  res.redirect('/')
-  // Page.findAll({})
-  //   .then(function(pages) {
-  //     res.render('index', {pages: pages})
-  // }).catch(next);
+  Page.findAll({})
+    .then(function(pages) {
+      res.render('index', {pages: pages})
+  }).catch(next);
 });
 
 router.post('/', function(req, res, next) {
@@ -20,8 +19,8 @@ router.post('/', function(req, res, next) {
     content: req.body.content,
     status: req.body.status
   }).then(function(page) {
-    res.json(page);
-  });
+    res.redirect(page.route);
+  }).catch(next);
 });
 
 router.get('/add', function(req, res, next) {
