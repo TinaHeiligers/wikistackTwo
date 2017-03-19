@@ -24,8 +24,10 @@
   },
   "homepage": "https://github.com/TinaHeiligers/wikistackTwo#readme",
   "dependencies": {
+    "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
+    "marked": "^0.3.6",
     "morgan": "^1.8.1",
     "nunjucks": "^3.0.0",
     "path": "^0.12.7",

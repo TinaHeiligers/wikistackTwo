@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var Page = require('../models').Page;
+var User = require('../models').User;
 
 module.exports = router;
 
@@ -13,14 +14,26 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  // res.json(req.body);
-  Page.create({
-    title: req.body.title,
-    content: req.body.content,
-    status: req.body.status
-  }).then(function(page) {
+  User.findOrCreate({
+    where: {
+      name: req.body.name,
+      email: req.body.email
+    }
+  })
+  .spread(function(user, createdPageBool) {
+    // console.log('user');
+    // console.log(user);
+    // console.log('createdPageBool');
+    // console.log(createdPageBool);
+    return Page.create(req.body)
+      .then(function(page) {
+        return page.setAuthor(user);
+      });
+  })
+  .then(function(page) {
     res.redirect(page.route);
-  }).catch(next);
+  })
+  .catch(next);
 });
 
 router.get('/add', function(req, res, next) {
@@ -32,12 +45,19 @@ router.get('/:urlTitle', function (req, res, next) {
   Page.findOne({
     where: {
       urlTitle: req.params.urlTitle
-    }
+    },
+    include: [
+        {model: User, as: 'author'}
+    ]
   })
   .then(function(page){
-    res.render('wikipage', {
-      page: page
-    });
+    if (page === null) {
+      throw ('No page found with this title', 404);
+    } else {
+        res.render('wikipage', {
+        page: page
+      });
+    }
   })
   .catch(next);
 
