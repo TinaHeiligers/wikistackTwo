@@ -4,6 +4,8 @@ var morgan = require('morgan');
 var path = require('path');
 var bodyParser = require('body-parser');
 var nunjucks = require('nunjucks');
+var Page = require('./models').Page;
+var User = require('./models').User;
 
 var app = express();
 
@@ -34,6 +36,12 @@ app.use(function(err, req, res, next) {
 });
 
 //sync the db first then tell the app to listen
-app.listen(3010, function() {
-  console.log("Server listening on port 3010");
-})
+Page.sync({force: true})
+    .then(function() {
+      User.sync({force: true})
+    })
+    .then(function() {
+      app.listen(3010, function() {
+        console.log("Server listening on port 3010");
+      })
+    })
